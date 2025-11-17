@@ -27,3 +27,27 @@ class TestAnalizador(unittest.TestCase):
     def test_ventas_por_provincia_existente(self):
         resultado = self.analizador.ventas_por_provincia("pichincha")
         self.assertGreater(resultado, 0)
+
+
+
+    def test_exportaciones_totales_por_mes(self):
+        analizador = Analizador("datos/sri_ventas_2024.csv")
+        resultado = analizador.exportaciones_totales_por_mes()
+        self.assertIsInstance(resultado, dict)
+        self.assertIn("ENERO", resultado)
+        self.assertIn("FEBRERO", resultado)
+        self.assertIsInstance(resultado["ENERO"], float)
+
+
+
+
+    def test_porcentaje_tarifa_0_por_provincia(self):
+        analizador = Analizador("datos/sri_ventas_2024.csv")
+        resultado = analizador.porcentaje_tarifa_0_por_provincia()
+        self.assertIsInstance(resultado, dict)
+        self.assertIn("PICHINCHA", resultado)
+        self.assertIn("GUAYAS", resultado)
+        self.assertIsInstance(resultado["PICHINCHA"], float)
+        self.assertGreaterEqual(resultado["PICHINCHA"], 0)
+
+

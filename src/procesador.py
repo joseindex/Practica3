@@ -9,9 +9,7 @@ class Analizador:
         self._leer_archivo()
 
     def _leer_archivo(self):
-        """
-        Lee el archivo CSV separado por '|' y guarda su contenido en una lista de diccionarios.
-        """
+        
         try:
            
             with open(self.archivo_csv, mode="r", encoding="latin1", newline="") as file:
@@ -41,10 +39,7 @@ class Analizador:
             print("❌ Error inesperado:", e)
 
     def ventas_totales_por_provincia(self):
-        """
-        Retorna un diccionario con el total de ventas agrupado por provincia.
-        Filtra provincias vacías o inválidas y opcionalmente ventas muy bajas.
-        """
+      
         ventas_por_prov = {}
 
         for fila in self.datos:
@@ -61,10 +56,7 @@ class Analizador:
         return ventas_por_prov
 
     def ventas_por_provincia(self, nombre):
-        """
-        Retorna el total de ventas de una provincia específica.
-        Si la provincia no existe, lanza KeyError.
-        """
+       
         nombre = nombre.strip().upper()
 
         ventas = [
@@ -77,3 +69,77 @@ class Analizador:
             raise KeyError(f"Provincia '{nombre}' no encontrada")
 
         return sum(ventas)
+    
+
+
+    
+    def exportaciones_totales_por_mes(self):
+
+        MESES = {
+            "1": "ENERO", "01": "ENERO",
+            "2": "FEBRERO", "02": "FEBRERO",
+            "3": "MARZO", "03": "MARZO",
+            "4": "ABRIL", "04": "ABRIL",
+            "5": "MAYO", "05": "MAYO",
+            "6": "JUNIO", "06": "JUNIO",
+            "7": "JULIO", "07": "JULIO",
+            "8": "AGOSTO", "08": "AGOSTO",
+            "9": "SEPTIEMBRE", "09": "SEPTIEMBRE",
+            "10": "OCTUBRE",
+            "11": "NOVIEMBRE",
+            "12": "DICIEMBRE"
+        }
+
+        resultado = {}
+
+        for fila in self.datos:
+            mes = str(fila.get("MES")).strip()
+
+            mes_nombre = MESES.get(mes, mes)
+
+            valor = str(fila.get("EXPORTACIONES", "0")).replace(",", ".")
+
+            try:
+                valor = float(valor)
+            except:
+                valor = 0.0
+
+            resultado[mes_nombre] = resultado.get(mes_nombre, 0) + valor
+
+        return resultado
+
+
+    
+
+
+
+    def porcentaje_tarifa_0_por_provincia(self):
+        resultado = {}
+
+        for fila in self.datos:
+            provincia = fila.get("PROVINCIA")
+
+            v0 = str(fila.get("VENTAS_NETAS_TARIFA_0", "0")).replace(",", ".")
+            total = str(fila.get("TOTAL_VENTAS", "0")).replace(",", ".")
+
+            try:
+                v0 = float(v0)
+            except ValueError:
+                v0 = 0.0
+
+            try:
+                total = float(total)
+            except ValueError:
+                total = 0.0
+
+            if total > 0:
+                porcentaje = (v0 / total) * 100
+            else:
+                porcentaje = 0.0
+
+            resultado[provincia] = porcentaje
+
+        return resultado
+
+
+
