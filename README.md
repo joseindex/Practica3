@@ -17,7 +17,7 @@ Practica3/
 │── README.md # Documentación del proyecto
 
 
-## 🧠 Funcionalidades Principales
+##  Funcionalidades Principales
 
 El módulo `procesador.py` realiza operaciones como:
 
@@ -28,20 +28,17 @@ El módulo `procesador.py` realiza operaciones como:
 - ✔️ Generar estructuras limpias para análisis posterior
 
   
-## 🧪 Ejecución de Pruebas Unitarias
+##  Ejecución de Pruebas Unitarias
 
 python -m unittest tests/test_procesador.py -v
 
-## 🧪 Ver el reporte en la terminal
-coverage report -m
+## Reporte de Cobertura
 
-
-Name                       Stmts   Miss  Cover   Missing
---------------------------------------------------------
-src/procesador.py            73     14    81%    ...
-tests/test_procesador.py     37      0   100%
---------------------------------------------------------
-TOTAL                        110    14    87%
+| Archivo                  | Instrucciones | Sin cubrir | Cobertura | Líneas faltantes |
+|-------------------------|--------------:|-----------:|----------:|-----------------|
+| src/procesador.py     | 73            | 14         | 81%       | ...             |
+| tests/test_procesador.py | 37         | 0          | 100%      | —               |
+| *TOTAL*               | 110           | 14         | 87%       | —               |
 
 ## 🧪 Requisitos
 
